@@ -1,3 +1,7 @@
-import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { Routes } from '@angular/router';
+import { LoginPageComponent } from './features/auth/login.page';
+
+export const routes: Routes = [
+	{ path: '', component: LoginPageComponent },
+];
