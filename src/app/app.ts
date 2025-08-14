@@ -3,12 +3,14 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet,
+  ],
   template: `
   <router-outlet />
-    <h1>{{ title() }}</h1>
-    `,
+    <h1>{{ title() }}</h1>    `,
 })
 export class App {
   protected readonly title = signal('echo-app');
+  constructor() { }
 }
