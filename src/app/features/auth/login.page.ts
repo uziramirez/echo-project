@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
+import { ButtonComponent } from "../../shared/button/button.componet";
 
 @Component({
   standalone: true,
@@ -13,18 +14,18 @@ import { AuthService } from '../../core/auth/auth.service';
       <form (ngSubmit)="login()" #form="ngForm">
         <input type="email" name="email" [(ngModel)]="email" placeholder="Email" required />
         <input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required />
-        <button type="submit" [disabled]="form.invalid">Entrar</button>
+        <ui-button type="submit" [disabled]="form.invalid ?? false">Entrar</ui-button>
       </form>
     </section>
   `,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, ButtonComponent]
 })
 export class LoginPageComponent {
   email = '';
   password = '';
 
   constructor(private authService: AuthService, private router: Router) {}
-  
+
   login() {
     this.authService.login(this.email, this.password).then(() => {
       this.router.navigate(['/']);
