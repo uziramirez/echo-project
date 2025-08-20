@@ -21,6 +21,17 @@ export class EchosService {
     return data || [];
   }
 
+ async getEchoById(id: string): Promise<Ecos | null> {
+    const { data, error } = await this.supabase
+      .from('echos')
+      .select('*, usuario:profiles(username, avatar_url)')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    return data ?? null;
+  }
+
   async likeEcho(echoId: string) {
     const { error } = await this.supabase.from('likes').insert({ echo_id: echoId });
     if (error) throw error;
@@ -30,4 +41,19 @@ export class EchosService {
     const { error } = await this.supabase.from('likes').delete().eq('echo_id', echoId);
     if (error) throw error;
   }
+
+  async getLikedEchos(userId: string): Promise<Ecos[]> {
+  const { data, error } = await this.supabase
+    .from('likes')
+    .select('echo:echos(*, usuario:profiles(username, avatar_url))')
+    .eq('user_id', userId);
+
+  if (error) throw error;
+
+  // el select anidado regresa { echo: { ... } }
+  return (data || []).map((row: any) => row.echo);
 }
+
+}
+
+

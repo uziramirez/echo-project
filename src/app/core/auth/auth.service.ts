@@ -41,6 +41,15 @@ export class AuthService {
     if (error) throw error;
   }
 
+
+  /**
+   * Saber si hay sesión activa
+   */
+  isAuthenticated(): boolean {
+    // Puedes mejorar esto según tu lógica de sesión
+    return !!localStorage.getItem('supabase.auth.token');
+  }
+
   /**
    * Obtener usuario actual
    */
