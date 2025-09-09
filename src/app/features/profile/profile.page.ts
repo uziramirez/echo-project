@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfilesService } from '../../core/services/profiles.services';
 import { AuthService } from '../../core/auth/auth.service';
 import { Usuario } from '../../core/models/usuario.model';
-import { ButtonComponet } from '../../shared/button/button.componet';
+import { ButtonComponent } from '../../shared/button/button.component';
 
 @Component({
   standalone: true,

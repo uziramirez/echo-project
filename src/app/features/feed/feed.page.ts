@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EchoCardComponent } from '../../shared/echo-card/echo-card.component';
-import { ButtonComponet } from '../../shared/button/button.componet';
+import { ButtonComponent } from '../../shared/button/button.component';
 import { EchosService } from '../../core/services/echos.service';
 import { Ecos } from '../../core/models/ecos.model';
 
@@ -32,7 +32,7 @@ import { Ecos } from '../../core/models/ecos.model';
       </div>
     </section>
   `,
-  imports: [CommonModule, EchoCardComponent, ButtonComponet],
+  imports: [CommonModule, EchoCardComponent, ButtonComponent],
 })
 export class FeedPageComponent implements OnInit {
   echos = signal<Ecos[]>([]);

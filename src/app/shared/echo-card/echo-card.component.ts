@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ButtonComponent } from '../button/button.componet';
-import { Ecos } from '../../core/models/ecos.model';
+import { ButtonComponent } from '../button/button.component';
 import { DatePipe } from '@angular/common';
+import { Ecos } from '../../core/models/ecos.model';
 
 @Component({
   standalone: true,

@@ -1,32 +1,38 @@
-import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { Injectable, inject } from '@angular/core';
+import { SupabaseService } from '../supabase/supabase.service';
+
 
 @Injectable({ providedIn: 'root' })
 export class LikesService {
-  private supabase: SupabaseClient;
+private supabase = inject(SupabaseService);
 
-  constructor() {
-    this.supabase = createClient(
-      'https://lkwzbetrjnozrmdntoeg.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxrd3piZXRyam5venJtZG50b2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMTk5MjIsImV4cCI6MjA3MDY5NTkyMn0.erKShL0Yd_PuOKkuc4sJUSZix5zeLD73AH9rhQ6i-LM'
-    );
-  }
 
-  async like(echoId: string, userId: string) {
-    const { error } = await this.supabase.from('likes').insert({
-      echo_id: echoId,
-      user_id: userId,
-    });
-    if (error) throw error;
-  }
+async toggleLike(echoId: string, userId: string){
+const { data } = await this.supabase.client
+.from('likes')
+.select('*')
+.eq('ecos_id', echoId)
+.eq('usuario_id', userId)
+.maybeSingle();
 
-  async unlike(echoId: string, userId: string) {
-    const { error } = await this.supabase
-      .from('likes')
-      .delete()
-      .eq('echo_id', echoId)
-      .eq('user_id', userId);
 
-    if (error) throw error;
-  }
+if(data){
+return this.supabase.client
+.from('likes')
+.delete()
+.eq('id', data.id);
+} else {
+return this.supabase.client
+.from('likes')
+.insert({ ecos_id: echoId, usuario_id: userId });
+}
+}
+
+
+async getLikes(echoId: string){
+return this.supabase.client
+.from('likes')
+.select('id')
+.eq('ecos_id', echoId);
+}
 }

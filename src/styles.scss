@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+/* === Dark theme (Twitter-like) + utilidades globales === */
+:root{
+--bg: #000;
+--text: #e7e9ea;
+--muted: #8b98a5;
+--line: #2f3336;
+--accent: #1d9bf0;
+--hover: #16181c;
+--danger: #f4212e;
+}
+*{ box-sizing: border-box; }
+html, body { height: 100%; }
+body{
+margin: 0;
+background: var(--bg);
+color: var(--text);
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+
+/* Enlaces */
+a{ color: var(--accent); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+
+/* Layout utilitario */
+.container{ max-width: 680px; margin: 0 auto; padding: 1rem; }
+.row{ display: flex; align-items: center; gap: .5rem; }
+.muted{ color: var(--muted); font-size: .9rem; }
+
+
+/* Tarjetas y avatars */
+.card{ padding: 1rem; border-bottom: 1px solid var(--line); }
+.avatar{ width: 40px; height: 40px; border-radius: 999px; object-fit: cover; border: 1px solid var(--line); }
+
+
+/* Form controls */
+input, textarea{
+width: 100%;
+padding: .65rem .75rem;
+background: transparent;
+color: var(--text);
+border: 1px solid var(--line);
+border-radius: 10px;
+}
+input::placeholder, textarea::placeholder{ color: var(--muted); }
+input:focus-visible, textarea:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+input.invalid, textarea.invalid{ border-color: var(--danger); }
+.error{ color: var(--danger); margin-top: .5rem; }
+
+
+/* Botones */
+.btn{
+display: inline-flex; align-items: center; justify-content: center;
+min-height: 44px; /* accesible */
+padding: .5rem 1rem; border-radius: 9999px; border: 1px solid var(--line);
+background: transparent; color: var(--text); cursor: pointer; transition: background .15s ease;
+}
+.btn:hover:not(:disabled){ background: var(--hover); }
+.btn:disabled{ opacity: .6; cursor: not-allowed; }
+.btn.primary{ border-color: var(--accent); }
+.btn.secondary{ border-color: var(--line); }
+
+
+.pager{ display: flex; gap: .5rem; padding: 1rem; border-top: 1px solid var(--line); }

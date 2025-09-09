@@ -1,17 +1,37 @@
-import { Injectable } from '@angular/core';
+import { signal, Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../supabase/supabase.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
-  constructor(private supabaseService: SupabaseService) {}
 
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+private userSig = signal<any | null>(null);
+user = this.userSig.asReadonly();
+
+
+constructor(private supabase: SupabaseService) {}
+
+  async initSession(){
+    const { data: { session } } = await this.supabase.client.auth.getSession();
+    this.userSig.set(session?.user ?? null);
+    this.supabase.client.auth.onAuthStateChange((_ev, s) => {
+    this.userSig.set(s?.user ?? null);
+    });
+  }
+
+
+  isAuthenticated(){
+    return !!this.userSig();
+    }
+
+
+  getUserId(){
+    return this.userSig()?.id ?? null;
+    }
   /**
    * Iniciar sesión con email y contraseña
    */
   async login(email: string, password: string) {
-    const { data, error } = await this.supabaseService.client.auth.signInWithPassword({
+    const { data, error } = await this.supabase.client.auth.signInWithPassword({
       email,
       password
     });
@@ -24,7 +44,7 @@ export class AuthService {
    * Registrarse con email y contraseña
    */
   async signup(email: string, password: string) {
-    const { data, error } = await this.supabaseService.client.auth.signUp({
+    const { data, error } = await this.supabase.client.auth.signUp({
       email,
       password
     });
@@ -37,7 +57,7 @@ export class AuthService {
    * Cerrar sesión
    */
   async logout() {
-    const { error } = await this.supabaseService.client.auth.signOut();
+    const { error } = await this.supabase.client.auth.signOut();
     if (error) throw error;
   }
 
@@ -45,22 +65,19 @@ export class AuthService {
   /**
    * Saber si hay sesión activa
    */
-  isAuthenticated(): boolean {
-    // Puedes mejorar esto según tu lógica de sesión
-    return !!localStorage.getItem('supabase.auth.token');
-  }
+  
 
   /**
    * Obtener usuario actual
    */
   getUser() {
-    return this.supabaseService.client.auth.getUser();
+    return this.supabase.client.auth.getUser();
   }
 
   /**
    * Escuchar cambios de sesión
    */
   onAuthStateChange(callback: (event: string, session: any) => void) {
-    this.supabaseService.client.auth.onAuthStateChange(callback);
+    this.supabase.client.auth.onAuthStateChange(callback);
   }
 }

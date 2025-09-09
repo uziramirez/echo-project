@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { EchoCardComponent } from '../../shared/echo-card/echo-card.component';
-import { ButtonComponet } from '../../shared/button/button.componet';
+import { ButtonComponent } from '../../shared/button/button.component';
 import { EchosService } from '../../core/services/echos.service';
 import { CommentsService } from '../../core/services/comments.service';
 import { Ecos } from '../../core/models/ecos.model';
@@ -46,7 +46,7 @@ import { FormsModule } from '@angular/forms';
       }
     </section>
   `,
-  imports: [CommonModule, EchoCardComponent, ButtonComponet, FormsModule]
+  imports: [CommonModule, EchoCardComponent, ButtonComponent, FormsModule]
 })
 export class EchoDetailPageComponent implements OnInit {
   echo = signal<Ecos | null>(null);

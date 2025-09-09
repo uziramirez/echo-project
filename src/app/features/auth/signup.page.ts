@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
-import { ButtonComponet } from '../../shared/button/button.componet';
+import { ButtonComponent } from '../../shared/button/button.component';
 
 @Component({
   standalone: true,
@@ -51,7 +51,7 @@ import { ButtonComponet } from '../../shared/button/button.componet';
       @if (loading()) { <p class="muted">Creando cuenta…</p> }
     </section>
   `,
-  imports: [CommonModule, FormsModule, ButtonComponet]
+  imports: [CommonModule, FormsModule, ButtonComponent]
 })
 export class SignupPageComponent {
   email = '';
